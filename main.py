@@ -31,9 +31,11 @@ def getPlural(word):
     soup = BeautifulSoup(html_text, 'lxml')
     infoblocks = soup.find_all('div', 'tense-section')
     plural = 'n/a'
-    for i in range(2):
-        if infoblocks[i].find('b'):
-            plural = infoblocks[i].find('b').text
+    for info in infoblocks:
+        if not plural == 'n/a':
+            break
+        if info.find('b'):
+            plural = info.find('b').text
     dictionary_data[word]['Plural'] = plural
 
 

@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import pprint
 import requests
 import pytesseract
-import googletrans
 import os
 from googletrans import Translator
 from PIL import Image
@@ -26,13 +25,15 @@ def getType(word):
         dictionary_data[word]['Type'] = 'N/a'
 
 
-
 def getPlural(word):
     dicWeb = 'https://www.definify.com/word/'
     html_text = requests.get(dicWeb + word).text
     soup = BeautifulSoup(html_text, 'lxml')
     infoblocks = soup.find_all('div', 'tense-section')
-    plural = infoblocks[1].find('b').text
+    plural = 'n/a'
+    for info in infoblocks:
+        if info.find('b'):
+            plural = info.find('b').text
     dictionary_data[word]['Plural'] = plural
 
 
